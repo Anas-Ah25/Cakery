@@ -19,7 +19,7 @@ import cart1 from '../../img/shop/cart/cart1.jpg';
  */
 const CartItem = ({
   cartid,
-  productid,
+  productId,
   productname,
   cartitemid,
   customcakeid,
@@ -27,33 +27,50 @@ const CartItem = ({
   price,
   total,
   onRemove,
-}) => (
-  <tr className="cart-item-row">
-    <td>
-      <h6 className="cart-item__name">
-        <Image
-          src={cart1}
-          alt={`Image of ${productname}`}
-          className="cart-item__image"
-        />
-        <span className="cart-item__name-text">{productname}</span>
-      </h6>
-    </td>
-    <td>
-      <h6>${price}</h6>
-    </td>
-    <td>
-      <h6>{quantity}</h6>
-    </td>
-    <td>
-      <h6>${total}</h6>
-    </td>
-    <td>
-      <button onClick={onRemove} className="remove-btn">
-        <i className="fa fa-times text-danger"></i>
-      </button>
-    </td>
-  </tr>
-);
+  onIncrease,
+  onDecrease,
+}) => {
+  return (
+    <tr className="cart-item-row">
+      <td>
+        <h6 className="cart-item__name">
+          <Image
+            src={cart1}
+            alt={`Image of ${productname}`}
+            className="cart-item__image"
+          />
+          <span className="cart-item__name-text">
+            {productname ? productname : 'Custom Cake'}
+          </span>
+        </h6>
+      </td>
+      <td>
+        <h6>${price}</h6>
+      </td>
+      <td>
+        <div className="d-flex flex-row justify-content-between">
+          <button onClick={onDecrease}
+          className='btn btn-light' title='decrease item'>
+            <i className="fa fa-minus "style={{color:'#f08632' }}></i>
+          </button>
+          <h6 className='mt-2'>{quantity}</h6>
+          <button onClick={onIncrease}
+          className='btn btn-light' title='Add item'>
+            <i className="fa fa-plus"style={{color:'#f08649' }}></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <h6>${total}</h6>
+      </td>
+      <td>
+        <button onClick={onRemove}
+        className="btn btn-light" title='Remove item'>
+        <i className="fa fa-trash" style={{color:'red' }} ></i>  
+              </button>
+      </td>
+    </tr>
+  );
+};
 
 export default CartItem;

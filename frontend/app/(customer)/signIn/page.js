@@ -1,12 +1,18 @@
 'use client';
-import Image from 'next/image';
-import googleIcon from '@/img/icon/googleIcon.svg';
 import Button from '../components/button';
 import CheckoutInputField from '../components/checkoutInput';
 import Title from '../components/title';
-import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
-import { useSearchParams } from 'next/navigation';
+import { useActionState, useEffect } from 'react';
+import { authenticate, loginWithGoogle } from '@/app/lib/actions';
+import { useSearchParams, redirect } from 'next/navigation';
+import GoogleBtn from '../components/googleBtn';
+import {
+  isAdminPage,
+  isBakerPage,
+  isDeliveryPage,
+  isUserPage,
+} from '@/authUtils';
+import Link from 'next/link';
 
 /**
  * Renders a sign in form with email and password fields, and a button to
@@ -18,27 +24,24 @@ import { useSearchParams } from 'next/navigation';
  */
 export default function SignIn() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/';
-  const googleStyle = {
-    width: '500px',
-    height: '60px',
-    marginBottom: '30px',
-    backgroundColor: 'white',
-    color: 'black',
-    padding: '10px 20px',
-    border: '1px solid black',
-    borderRadius: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '20px',
-    gap: '10px',
-  };
+  // const callbackUrl = searchParams?.get('callbackUrl')
+  //   ? new URL(searchParams?.get('callbackUrl')).pathname
+  //   : undefined;
+  const googleError = searchParams?.get('googleError');
 
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,
   );
+  useEffect(() => {
+    if (errorMessage?.loggedIn)
+      cookieStore.get('role').then((role) => {
+        if (role?.value) {
+          redirect(`../${role.value == 'customer' ? '' : role.value}`);
+        }
+      });
+  }, [errorMessage]);
+
   return (
     <section className="checkout spad">
       <div className="container">
@@ -61,16 +64,34 @@ export default function SignIn() {
                       name="password"
                       label="Password"
                     />
-                    <input
+                    <p
+                      style={{
+                        fontFamily: 'Montserrat',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      Forgot your Password?{' '}
+                      <Link href="/forgotPassword" className="text-primary ">
+                        Click Here
+                      </Link>
+                    </p>
+                    {/* <input
                       type="hidden"
                       name="callbackUrl"
                       value={callbackUrl}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center mt-4">
                   <Button type="submit">Log In</Button>
-                  {errorMessage}
+                  <div className="d-flex justify-items-center mx-auto mb-3">
+                    <GoogleBtn googleCallback={loginWithGoogle} />
+                  </div>
+                  {errorMessage?.message}
+                  {/* 
+                  {errorMessage || googleError
+                    ? 'An error occured Sign in with Google, Try again Later or Sign up'
+                    : ''} */}
                   {/*   <button type="button" style={googleStyle}>
                     <Image width={20} height={20} src={googleIcon} alt="" />
                     Continue with Google {isPending}
@@ -82,11 +103,11 @@ export default function SignIn() {
                       textTransform: 'uppercase',
                     }}
                   >
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                   </p>
-                  <a href="/signUp" className="text-primary ">
+                  <Link href="/signUp" className="text-primary ">
                     SIGN UP
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

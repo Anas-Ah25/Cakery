@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import product3 from '../../img/shop/product3.jpg';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export const addBtnStyle = {
   fontsize: '14px',
@@ -22,21 +22,28 @@ export const AddToCart = async (productid, quantity = 1) => {
     quantity: quantity,
   };
 
-  try {
-    const cookie = await cookieStore.get('token');
-    const response = await fetch('/api/customer/Cart/Add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookie.value}`,
-      },
-      body: JSON.stringify(product),
-    });
-
-    const data = await response.json();
-    console.log(data.message);
-  } catch (error) {
-    console.error(error);
+  const cookie = await cookieStore.get('token');
+  if (cookie?.value) {
+    try {
+      const response = await fetch('/api/cakery/user/customer/Cart/Add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookie.value}`,
+        },
+        body: JSON.stringify(product),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+      } else {
+        throw data.message;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    redirect('/signIn');
   }
 };
 /**
@@ -54,7 +61,7 @@ export const AddToCart = async (productid, quantity = 1) => {
 const ProductCard = ({
   name,
   productid,
-  image = product3,
+  image,
   category,
   price,
   rating = 5,
@@ -64,11 +71,13 @@ const ProductCard = ({
       <div className="product__item">
         <div className="product__item__pic">
           <Image
+            // layout="responsive"
             // loader={}
+
             src={image}
             alt={name}
-            width={300}
-            height={300}
+            width={250}
+            height={220}
             className="product-img"
           />
           <div className="product__label">
