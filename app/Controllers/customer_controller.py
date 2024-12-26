@@ -1581,7 +1581,7 @@ def customer_review():
 
 # ----------------------------------------------------------------------------------
 @customer_controller.route("/cakery/user/customer/test", methods=["POST"])
-def customer_review():
+def citesstFunc():
     try:
      
         return jsonify({"this is the result"}), 200
