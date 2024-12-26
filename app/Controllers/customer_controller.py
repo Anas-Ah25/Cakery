@@ -56,9 +56,8 @@ def list_products():
               type: string
               example: "Detailed error message."
     """
-    
     try:
-        products = {"test"}
+        products = customer_service.list_products()
         return jsonify(products), 200
     except Exception as e:
         return (
