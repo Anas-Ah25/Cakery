@@ -1580,3 +1580,18 @@ def customer_review():
 
 
 # ----------------------------------------------------------------------------------
+@customer_controller.route("/cakery/user/customer/test", methods=["POST"])
+def customer_review():
+    try:
+     
+        return jsonify({"this is the result"}), 200
+    except Exception as e:
+        return (
+            jsonify(
+                {
+                    "error": "testing the cicd",
+                    "error_details": str(e),
+                }
+            ),
+            500,
+        )
