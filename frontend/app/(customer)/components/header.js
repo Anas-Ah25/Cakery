@@ -4,6 +4,7 @@ import logo from '@/img/logo.png';
 import heart from '@/img/icon/heart.png';
 import cart from '@/img/icon/cart.png';
 import search from '@/img/icon/search.png';
+import bell from '@/img/icon/bell.svg';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,11 +16,12 @@ import { usePathname } from 'next/navigation';
  *
  * @param {Object} props - The component properties.
  * @param {number} props.itemsInCart - The number of items in the cart.
+ * @param {string} [props.name] - The authentication token to determine user login status.
  * @param {string} [props.token] - The authentication token to determine user login status.
  *
  * @returns {React.ReactElement} The rendered header navigation component.
  */
-function HeaderNav({ itemsInCart = 0, token }) {
+function HeaderNav({ itemsInCart = 0, sumInCart, name, token }) {
   const [buttonClicked, setButtonClicked] = useState(false);
   const iconSize = 25;
   const logoHeight = 65;
@@ -39,7 +41,7 @@ function HeaderNav({ itemsInCart = 0, token }) {
         >
           <div className="offcanvas__cart">
             <div className="offcanvas__cart__item">
-              <a href="#">
+              <Link href="#">
                 <Image
                   width={iconSize - 2}
                   height={iconSize + 2}
@@ -47,22 +49,32 @@ function HeaderNav({ itemsInCart = 0, token }) {
                   alt=""
                 />{' '}
                 <span>{itemsInCart}</span>
-              </a>
-              <div className="cart__price">
-                Cart: <span>$0.00</span>
-              </div>
+              </Link>
+            </div>
+          </div>
+             <div className="offcanvas__cart">
+            <div className="offcanvas__cart__item">
+              <Link href="/notifications">
+                <Image
+                  width={iconSize - 2}
+                  height={iconSize + 2}
+                  src={bell}
+                  alt=""
+                />{' '}
+                <span></span>
+              </Link>
             </div>
           </div>
           <div className="offcanvas__logo">
-            <a href="/">
+            <Link href="/">
               <Image width={logoWidth} height={logoHeight} src={logo} alt="" />
-            </a>
+            </Link>
           </div>
           <div id="mobile-menu-wrap"></div>
           <div className="offcanvas__option">
             <ul>
               <li>
-                <a href="#">Sign in</a>{' '}
+                <Link href="#">Sign in</Link>{' '}
                 <span className="arrow_carrot-down"></span>
               </li>
             </ul>
@@ -80,26 +92,39 @@ function HeaderNav({ itemsInCart = 0, token }) {
                     <ul>
                       <li>
                         {token === undefined ? (
-                          <a href="/signIn">Sign in</a>
+                          <Link href="/signIn">Sign in</Link>
                         ) : (
-                          <a href="/customerOrders">Hello</a>
+                          <>
+                            <Link href="/customerOrders">{'My Orders'}</Link> |{' '}
+                            <Link href={`/signUp/${token}`}>
+                              Update Profile{' '}
+                            </Link>
+                          </>
                         )}
                       </li>
                     </ul>
                   </div>
                   <div className="header__logo">
-                    <a href="/">
+                    <Link href="/">
                       <Image
                         width={logoWidth}
                         height={logoHeight}
                         src={logo}
                         alt=""
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="header__top__right">
                     <div className="header__top__right__cart">
-                      <a href="/cart">
+                    <Link href="/notifications">
+                          <Image
+                           width={iconSize - 2}
+                             height={iconSize + 2}
+                            src={bell}
+                             alt=""
+                         />
+                      </Link>
+                      <Link href="/cart">
                         <Image
                           width={iconSize - 2}
                           height={iconSize + 2}
@@ -107,10 +132,11 @@ function HeaderNav({ itemsInCart = 0, token }) {
                           alt=""
                         />{' '}
                         <span>{itemsInCart}</span>
-                      </a>
+                      </Link>
                       <div className="cart__price">
-                        Cart: <span>$0.00</span>
+                        Cart: <span>${sumInCart}</span>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -140,7 +166,7 @@ function HeaderNav({ itemsInCart = 0, token }) {
                   </li>
 
                   <li>
-                    <a href="/contact">Contact</a>
+                    <Link href="/contact">Contact</Link>
                   </li>
                 </ul>
               </nav>

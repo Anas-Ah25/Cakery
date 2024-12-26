@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nivo/bar": "^0.88.0",
+    "@nivo/core": "^0.88.0",
+    "@nivo/line": "^0.88.0",
+    "@nivo/pie": "^0.88.0",
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.5",
+    "firebase": "^11.1.0",
     "next": "15.0.3",
     "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-bootstrap": "^2.10.6",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-onesignal": "^3.0.1",
+    "react-rating": "^2.0.5",
+    "react-rating-stars-component": "^2.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
