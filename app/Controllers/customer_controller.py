@@ -1595,3 +1595,9 @@ def citesstFunc():
             ),
             500,
         )
+
+@customer_controller.route("/cakery/user/test",methods=["GET"])
+def test_try():
+  return jsonify({
+    "Welcome Eng Aya"
+  })
