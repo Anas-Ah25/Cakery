@@ -1581,6 +1581,6 @@ def customer_review():
 
 # ----------------------------------------------------------------------------------
 
-@customer_controller.route("/cakery/user/test",methods=["GET"])
+@customer_controller.route("/test",methods=["GET"])
 def test_try():
   return jsonify({"Welcome Eng. Aya"})
