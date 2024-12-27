@@ -9,6 +9,7 @@ import ClassSection from './components/homePage/classSection';
 import TeamSection from './components/homePage/teamSection';
 import TestmonialSection from './components/homePage/testmonialSection';
 import useFcmToken from '@/utils/hooks/useFcmToken';
+import { useEffect } from 'react';
 
 export default function Home() {
   const testimonialsFetched = [
@@ -35,10 +36,15 @@ export default function Home() {
 
   useEffect(() => {
     cookieStore.get('token').then((token) => {
-      if (token && fcm) {
+      if (token && fcmToken) {
         console.log('FCM token: ', fcmToken);
         fetch(`api/cakery/user/customer/NotificationToken`, {
           method: 'post',
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({ fcm_token: fcmToken }),
         })
           .then((res) => res.json())
