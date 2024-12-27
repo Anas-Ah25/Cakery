@@ -1,143 +1,91 @@
-
-# 🎂 Cakery
+# 🎂 **Cakery**
 
 An online bakery platform where customers can browse, customize, and order cakes and pastries, with features for store staff to manage logistics and operations.
 
 ---
 
-##  Features
+## 🚀 **Deployed Application Links**
 
-### 👥 Customer Features:
-- Browse available products and customize cakes.
-- Add products to the cart and place orders.
-- View order history, track order status, and leave reviews.
-
-### 🛠️ Admin Features:
--  Manage customer and staff data.
--  Access analytics and view platform performance reports.
-
-### 👩‍🍳 Baker Features:
--  View assigned orders and update order status.
-
-### 🚚 Delivery Features:
--  View assigned orders and update the delivery status.
+- 🌐 **Frontend (Client Server Link)**: [http://cakery-mark-dev.vercel.app](http://cakery-mark-dev.vercel.app)  
+- 🌐 **Backend API Documentation**: [https://cakerybackendapp.azurewebsites.net/apidocs](https://cakerybackendapp.azurewebsites.net/apidocs) *(Default page contains API documentation with the ability to test all endpoints)*
 
 ---
 
-## 🖥️ Technologies Used
-- **Frontend:**  Next.js  
-- **Backend:** Flask (Python)  
-- **Database:** PostgreSQL  
----
-# Direct Access
-- 🌐 Frontend: https://wonderful-bush-03583ae10.4.azurestaticapps.net/
-- 🌐 Backend:  https://cakerybackendapp.azurewebsites.net/apidocs/ 
----
+## 🗂️ **Project Structure**
 
-##  Setup and Installation
+- **`app/`** – Backend API files (Flask, PostgreSQL)  
+  - Contains `.env.example` for backend environment configuration.
+- **`frontend/`** – Client server files (Next.js)  
+  - Contains `.env.example` for frontend environment configuration.
 
-Follow the steps below to set up the project on your local machine.
+Each folder (`app/` and `frontend/`) has its own `.env.example` file for environment variable setup.
 
 ---
 
-### Clone the Repository
-Clone the project repository to your local machine:  
+# 🛠️ **Setup and Installation**
+
+### 1️⃣ **Clone the Repository**
 ```bash
 git clone https://github.com/Anas-Ah25/Cakery.git
-```
-
-Navigate to the project directory:
-```bash
 cd Cakery
 ```
 
 ---
 
-###  Set Up the Database
+### 2️⃣ **Backend Setup**
+1. Navigate to the backend directory:
+```bash
+cd app
+```
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Create a `.env` file from the example:
+```bash
+cp .env.example .env
+```
+4. Update the `.env` file with the following connection string for a testing DB:
 
-#### Load the Database
-1. Ensure PostgreSQL is installed on your system and the `psql` command-line tool is accessible.
+```plaintext
+DATABASE_URL=postgresql+psycopg2://Anas:testServer1@cakery.postgres.database.azure.com:5432/CakeryMainDB
+```
 
-2. Create an empty database. For example, to create a database named `cakery`, run:
-   ```bash
-   createdb -U postgres cakery
-   ```
-
-3. Load the database schema and data:
-   - Use the provided backup file `CakeryDB_backup_populated_Tr4.sql`:
-     ```bash
-     psql -U postgres -d cakery -f "/path/to/CakeryDB_backup_populated_Tr2.sql"
-     ```
-     Replace `/path/to` with the actual path where the `.sql` file is located.
-
-4. (Optional) If prompted for the PostgreSQL password, you can temporarily set it in the terminal:
-   ```bash
-   set PGPASSWORD=your_postgres_password
-   ```
-   Replace `your_postgres_password` with your actual PostgreSQL password.
-
-5. Confirm the database is populated:
-   ```bash
-   psql -U postgres -d cakery
-   ```
+5. Start the backend server:
+```bash
+flask run
+```
+Backend runs at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
-###  Set Up the Backend
-1. Navigate to the backend folder:
-   ```bash
-   cd app
-   ```
+### 3️⃣ **Frontend Setup**
 
-2. Install the required Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Navigate to the frontend directory:  
+```bash
+cd frontend
+```
 
-3. Configure the environment variables:
-   - Create a `.env` file in the backend directory:
-     ```bash
-     touch .env
-     ```
-   - Use the provided `.env.example` file as a reference:
-     ```bash
-     cp .env.example .env
-     ```
-   - Update the `.env` file with your database credentials. For example:
-     ```
-     DATABASE_URL=postgresql://username:password@localhost/cakery
-     ```
-     Replace `username`, `password`, and `cakery` with your PostgreSQL username, password, and database name.
+2. Install dependencies:  
+```bash
+npm install
+# If you encounter dependency conflicts, use:
+npm install --legacy-peer-deps
+```
 
-4. Start the backend server:
-   ```bash
-   flask run
-   ```
-   The backend will run on `http://127.0.0.1:5000`.
+3. Start the development server:  
+```bash
+npm run dev
+```
+
+Frontend runs at: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-### Set Up the Frontend
-1. Navigate to the frontend folder:
-   ```bash
-   cd frontend
-   ```
+### 4️⃣ **Run the Application**
 
-2. Install the required dependencies:
-   ```bash
-   npm install
-   ```
+-  **Frontend:** [http://localhost:3000](http://localhost:3000)  
+-  **Backend:** [http://127.0.0.1:5000](http://127.0.0.1:5000)  
 
-3. Start the frontend development server:
-   ```bash
-   npm run dev
-   ```
-   The frontend will run on `http://localhost:3000`.
 
----
 
-### Open the Application
-Once the frontend and backend are running:
-
-- 🌐 Frontend: [http://localhost:3000](http://localhost:3000)
-- 🌐 Backend: [http://127.0.0.1:5000](http://127.0.0.1:5000)
