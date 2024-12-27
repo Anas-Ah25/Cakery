@@ -298,7 +298,8 @@ def update_fcm_token():
         customer = CustomerUser.query.filter_by(customeremail=customer_email).first()
         if not customer:
             return jsonify({"error": "Customer not found"}), 404
-
+        # only save fcm if it's not in the db 
+       
         customer.fcm_token = fcm_token
         db.session.commit()
         return jsonify({"message": "FCM token updated successfully"}), 200

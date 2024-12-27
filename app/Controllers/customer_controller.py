@@ -1580,24 +1580,7 @@ def customer_review():
 
 
 # ----------------------------------------------------------------------------------
-@customer_controller.route("/cakery/user/customer/test", methods=["POST"])
-def citesstFunc():
-    try:
-     
-        return jsonify({"this is the result"}), 200
-    except Exception as e:
-        return (
-            jsonify(
-                {
-                    "error": "testing the cicd",
-                    "error_details": str(e),
-                }
-            ),
-            500,
-        )
 
 @customer_controller.route("/cakery/user/test",methods=["GET"])
 def test_try():
-  return jsonify({
-    "Welcome Eng Aya"
-  })
+  return jsonify({"Welcome Eng. Aya"})
